@@ -7,7 +7,12 @@ $(document).ready(function() {
 
 //- WHEN I scroll down
 //- THEN I am presented with time blocks for standard business hours
-
+  $(".saveBtn").on("click", function() {
+    let time = $(this).parent().attr("id");
+    let text = $(this).siblings(".description").val();
+    // place it within the LS
+    localStorage.setItem(time, text);
+  })
   //- WHEN I view the time blocks for that day
   //- THEN each time block is color-coded to indicate whether it is in  the past, present, or future
   
