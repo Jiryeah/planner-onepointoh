@@ -1,10 +1,10 @@
-$(document).ready(function() {
 //- WHEN I open the planner
 //- THEN the current day is displayed at the top of the calendar
-  const today = dayjs().format("MMMM D, YYYY h:mm A");
-  console.log(today);
-  $("#currentDay").text(today);
+const today = dayjs().format("MMMM D, YYYY h:mm A");
+console.log(today);
+$("#currentDay").text(today);
 
+$(document).ready(function() {
 //- WHEN I scroll down
 //- THEN I am presented with time blocks for standard business hours
   $(".saveBtn").on("click", function() {
@@ -13,13 +13,9 @@ $(document).ready(function() {
     // place it within the LS
     localStorage.setItem(time, text);
   })
-  //- WHEN I view the time blocks for that day
-  //- THEN each time block is color-coded to indicate whether it is in  the past, present, or future
-  
-  //- WHEN I click into a time block
-  //- THEN I can enter an event
-  let timeOfEvent = function() {
-    let currentTime = dayjs().format('h:mm')
+
+  let timeOfEvent = () => {
+    let currentTime = dayjs().format("h:mm A");
     console.log(currentTime);
 
     $(".time-block").each(function () {
@@ -29,16 +25,16 @@ $(document).ready(function() {
         $(this).addClass("past");
         $(this).removeClass("present");
         $(this).removeClass("future");
-      }else if (blockHour === currentTime) {
+      } else if (blockHour === currentTime) {
         $(this).removeClass("past");
         $(this).addClass("present");
         $(this).removeClass("future");
-      }else {
+      } else {
         $(this).removeClass("past");
         $(this).removeClass("present");
         $(this).addClass("future");
       }
-    })
+    });
   }
   //- WHEN I click the save button for that time block
   //- THEN the text for that event is saved in local storage
@@ -55,4 +51,4 @@ $(document).ready(function() {
   $(".description #1500-h").val(localStorage.getItem("1500-h"));
   $(".description #1600-h").val(localStorage.getItem("1600-h"));
   $(".description #1700-h").val(localStorage.getItem("1700-h"));
-})
+});
