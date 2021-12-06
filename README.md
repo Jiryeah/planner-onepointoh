@@ -22,3 +22,5 @@ planner so that they may manage their time more effectively.
 
 ### Deployed Application link and Screenshot 
 - https://jiryeah.github.io/planner-onepointoh/
+
+- <img width="1436" alt="Screen Shot 2021-12-06 at 1 05 30 AM" src="https://user-images.githubusercontent.com/92201576/144802431-c24136fb-fce1-4180-b3a0-f494cf4fe881.png">
