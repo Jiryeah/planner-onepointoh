@@ -17,12 +17,13 @@ $(document).ready(function() {
 
 
   let timeOfEvent = () => {
-    let currentTime = dayjs().format("h:mm A");
+    let currentTime = dayjs().format("HH00");
     console.log(currentTime);
 
     $(".time-block").each(function () {
       let blockHour = parseInt($(this).attr("id").split("hour")[0]);
       // validate time to determine which color will be displayed
+      console.log(blockHour);
       if (blockHour < currentTime) {
         $(this).addClass("past");
         $(this).removeClass("present");
