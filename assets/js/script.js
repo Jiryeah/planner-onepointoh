@@ -1,54 +1,60 @@
-const today = dayjs().format("MMMM D, YYYY h:mm A");
-console.log(today);
-$("#currentDay").text(today);
+$(document).ready(function () {
+  // listen for save button clicks
+  $('.saveBtn').on('click', function () {
+    // get nearby values
+    var value = $(this).siblings('.description').val();
+    var time = $(this).parent().attr('id');
 
-$(document).ready(function() {
-  $(".saveBtn").click(function(event) {
-    event.preventDefault();
-    let hour = $(this)
-                .parent()
-                .attr("id");
-    let events = $(this)
-                .siblings(".description")
-                .val();
-    // place it within the LS
-    localStorage.setItem(hour, events);
+    // save in localStorage
+    localStorage.setItem(time, value);
+
+    // Show notification that item was saved to localStorage by adding class 'show'
+    $('.notification').addClass('show');
+
+    // Timeout to remove 'show' class after 5 seconds
+    setTimeout(function () {
+      $('.notification').removeClass('show');
+    }, 5000);
   });
 
+  function hourUpdater() {
+    // get current number of hours
+    var currentHour = moment().hours();
 
-  let timeOfEvent = () => {
-    let currentTime = dayjs().format("HH00");
-    console.log(currentTime);
+    // loop over time blocks
+    $('.time-block').each(function () {
+      var blockHour = parseInt($(this).attr('id').split('-')[1]);
 
-    $(".time-block").each(function () {
-      let blockHour = parseInt($(this).attr("id").split("hour")[0]);
-      // validate time to determine which color will be displayed
-      console.log(blockHour);
-      if (blockHour < currentTime) {
-        $(this).addClass("past");
-        $(this).removeClass("present");
-        $(this).removeClass("future");
-      } else if (blockHour === currentTime) {
-        $(this).removeClass("past");
-        $(this).addClass("present");
-        $(this).removeClass("future");
+      // check if we've moved past this time
+      if (blockHour < currentHour) {
+        $(this).addClass('past');
+      } else if (blockHour === currentHour) {
+        $(this).removeClass('past');
+        $(this).addClass('present');
       } else {
-        $(this).removeClass("past");
-        $(this).removeClass("present");
-        $(this).addClass("future");
+        $(this).removeClass('past');
+        $(this).removeClass('present');
+        $(this).addClass('future');
       }
     });
   }
 
-  $("#9").val(localStorage.getItem("0900-h"));
-  $("#10").val(localStorage.getItem("1000-h"));
-  $("#11").val(localStorage.getItem("1100-h"));
-  $("#12").val(localStorage.getItem("1200-h"));
-  $("#13").val(localStorage.getItem("1300-h"));
-  $("#14").val(localStorage.getItem("1400-h"));
-  $("#15").val(localStorage.getItem("1500-h"));
-  $("#16").val(localStorage.getItem("1600-h"));
-  $("#17").val(localStorage.getItem("1700-h"));
-  
-  timeOfEvent();
+  hourUpdater();
+
+  // set up interval to check if current time needs to be updated
+  var interval = setInterval(hourUpdater, 15000);
+
+  // load any saved data from localStorage
+  $('#hour-9 .description').val(localStorage.getItem('hour-9'));
+  $('#hour-10 .description').val(localStorage.getItem('hour-10'));
+  $('#hour-11 .description').val(localStorage.getItem('hour-11'));
+  $('#hour-12 .description').val(localStorage.getItem('hour-12'));
+  $('#hour-13 .description').val(localStorage.getItem('hour-13'));
+  $('#hour-14 .description').val(localStorage.getItem('hour-14'));
+  $('#hour-15 .description').val(localStorage.getItem('hour-15'));
+  $('#hour-16 .description').val(localStorage.getItem('hour-16'));
+  $('#hour-17 .description').val(localStorage.getItem('hour-17'));
+
+  // display current day on page
+  $('#currentDay').text(moment().format('dddd, MMMM Do'));
 });
